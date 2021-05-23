@@ -3,12 +3,17 @@
 
 #include "MainCharacter.h"
 #include "Components/CapsuleComponent.h"
+#include "Camera/CameraComponent.h"
 
 // Sets default values
 AMainCharacter::AMainCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("FirstPersonCamera"));
+	CameraComponent->SetupAttachment(GetCapsuleComponent());
+	CameraComponent->bUsePawnControlRotation = true;
 
 }
 
