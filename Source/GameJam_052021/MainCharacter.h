@@ -7,6 +7,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "MainCharacter.generated.h"
 
+class UCameraComponent;
 UCLASS()
 class GAMEJAM_052021_API AMainCharacter : public ACharacter
 {
@@ -21,6 +22,14 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	//Component for modify player speed
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		UCharacterMovementComponent* PlayerCharacterMovement;
+
+	//Camera
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		UCameraComponent* CameraComponent;
 
 protected:
 	// Called when the game starts or when spawned
@@ -49,8 +58,7 @@ private:
 		float NormalSpeed = 550.0f;
 	UPROPERTY(EditAnywhere)
 		float DecrasedSpeed = 300.0f;
-	UPROPERTY(VisibleAnywhere)
-		UCharacterMovementComponent* PlayerCharacterMovement;
+	
 	//functions for modify speeds
 	void IncreaseMovementSpeed();
 	void NormalizeMovementSpeed();
