@@ -1,0 +1,128 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "GameJam_052021 (Debug)",
+			"request": "launch",
+			"preLaunchTask": "GameJam_052021 Win64 Debug Build",
+			"program": "E:\\Unreal\\GameJame_05_21\\Binaries\\Win64\\UE4-Win64-Debug.exe",
+			"args": [
+			],
+			"cwd": "D:\\Epic\\UE_4.26",
+			"stopAtEntry": false,
+			"externalConsole": true,
+			"type": "cppvsdbg",
+			"visualizerFile": "D:\\Epic\\UE_4.26\\Engine\\Extras\\VisualStudioDebugging\\UE4.natvis"
+		},
+		{
+			"name": "GameJam_052021 (DebugGame)",
+			"request": "launch",
+			"preLaunchTask": "GameJam_052021 Win64 DebugGame Build",
+			"program": "E:\\Unreal\\GameJame_05_21\\Binaries\\Win64\\UE4-Win64-DebugGame.exe",
+			"args": [
+			],
+			"cwd": "D:\\Epic\\UE_4.26",
+			"stopAtEntry": false,
+			"externalConsole": true,
+			"type": "cppvsdbg",
+			"visualizerFile": "D:\\Epic\\UE_4.26\\Engine\\Extras\\VisualStudioDebugging\\UE4.natvis"
+		},
+		{
+			"name": "GameJam_052021 (Development)",
+			"request": "launch",
+			"preLaunchTask": "GameJam_052021 Win64 Development Build",
+			"program": "E:\\Unreal\\GameJame_05_21\\Binaries\\Win64\\UE4.exe",
+			"args": [
+			],
+			"cwd": "D:\\Epic\\UE_4.26",
+			"stopAtEntry": false,
+			"externalConsole": true,
+			"type": "cppvsdbg",
+			"visualizerFile": "D:\\Epic\\UE_4.26\\Engine\\Extras\\VisualStudioDebugging\\UE4.natvis"
+		},
+		{
+			"name": "GameJam_052021 (Shipping)",
+			"request": "launch",
+			"preLaunchTask": "GameJam_052021 Win64 Shipping Build",
+			"program": "E:\\Unreal\\GameJame_05_21\\Binaries\\Win64\\UE4-Win64-Shipping.exe",
+			"args": [
+			],
+			"cwd": "D:\\Epic\\UE_4.26",
+			"stopAtEntry": false,
+			"externalConsole": true,
+			"type": "cppvsdbg",
+			"visualizerFile": "D:\\Epic\\UE_4.26\\Engine\\Extras\\VisualStudioDebugging\\UE4.natvis"
+		},
+		{
+			"name": "GameJam_052021 (Test)",
+			"request": "launch",
+			"preLaunchTask": "GameJam_052021 Win64 Test Build",
+			"program": "E:\\Unreal\\GameJame_05_21\\Binaries\\Win64\\UE4-Win64-Test.exe",
+			"args": [
+			],
+			"cwd": "D:\\Epic\\UE_4.26",
+			"stopAtEntry": false,
+			"externalConsole": true,
+			"type": "cppvsdbg",
+			"visualizerFile": "D:\\Epic\\UE_4.26\\Engine\\Extras\\VisualStudioDebugging\\UE4.natvis"
+		},
+		{
+			"name": "GameJam_052021Editor (Debug)",
+			"request": "launch",
+			"preLaunchTask": "GameJam_052021Editor Win64 Debug Build",
+			"program": "D:\\Epic\\UE_4.26\\Engine\\Binaries\\Win64\\UE4Editor-Win64-Debug.exe",
+			"args": [
+				"E:\\Unreal\\GameJame_05_21\\GameJam_052021.uproject"
+			],
+			"cwd": "D:\\Epic\\UE_4.26",
+			"stopAtEntry": false,
+			"externalConsole": true,
+			"type": "cppvsdbg",
+			"visualizerFile": "D:\\Epic\\UE_4.26\\Engine\\Extras\\VisualStudioDebugging\\UE4.natvis"
+		},
+		{
+			"name": "GameJam_052021Editor (DebugGame)",
+			"request": "launch",
+			"preLaunchTask": "GameJam_052021Editor Win64 DebugGame Build",
+			"program": "D:\\Epic\\UE_4.26\\Engine\\Binaries\\Win64\\UE4Editor-Win64-DebugGame.exe",
+			"args": [
+				"E:\\Unreal\\GameJame_05_21\\GameJam_052021.uproject"
+			],
+			"cwd": "D:\\Epic\\UE_4.26",
+			"stopAtEntry": false,
+			"externalConsole": true,
+			"type": "cppvsdbg",
+			"visualizerFile": "D:\\Epic\\UE_4.26\\Engine\\Extras\\VisualStudioDebugging\\UE4.natvis"
+		},
+		{
+			"name": "GameJam_052021Editor (Development)",
+			"request": "launch",
+			"preLaunchTask": "GameJam_052021Editor Win64 Development Build",
+			"program": "D:\\Epic\\UE_4.26\\Engine\\Binaries\\Win64\\UE4Editor.exe",
+			"args": [
+				"E:\\Unreal\\GameJame_05_21\\GameJam_052021.uproject"
+			],
+			"cwd": "D:\\Epic\\UE_4.26",
+			"stopAtEntry": false,
+			"externalConsole": true,
+			"type": "cppvsdbg",
+			"visualizerFile": "D:\\Epic\\UE_4.26\\Engine\\Extras\\VisualStudioDebugging\\UE4.natvis"
+		},
+		{
+			"name": "Generate Project Files",
+			"type": "clr",
+			"request": "launch",
+			"program": "D:\\Epic\\UE_4.26\\Engine\\Binaries\\DotNET\\UnrealBuildTool.exe",
+			"console": "externalTerminal",
+			"args": [
+				"-projectfiles",
+				"-vscode",
+				"-project=E:\\Unreal\\GameJame_05_21\\GameJam_052021.uproject",
+				"-game",
+				"-engine"
+			],
+			"internalConsoleOptions": "openOnSessionStart",
+			"cwd": "D:\\Epic\\UE_4.26"
+		}
+	]
+}
