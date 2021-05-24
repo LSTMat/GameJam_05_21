@@ -19,8 +19,33 @@ void UGrabberComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
-	
+	SetUpInputComponent();
+
+}
+
+
+void UGrabberComponent::SetUpInputComponent() 
+{
+	InputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
+	if (InputComponent)
+	{
+		InputComponent->BindAction("Grab", IE_Pressed, this, &UGrabberComponent::Grab);
+	}
+}
+
+void UGrabberComponent::Grab() 
+{
+
+	UE_LOG(LogTemp, Warning, TEXT("Grab"));
+	FHitResult Hit = GetFirstPhysicsBodyInReach();
+	UPrimitiveComponent* ComponentToGrab = Hit.GetComponent();
+
+
+	if (Hit.GetActor()) {
+		UE_LOG(LogTemp, Warning, TEXT("%s"), *Hit.GetActor()->GetName());
+
+	}
+
 }
 
 
@@ -29,6 +54,52 @@ void UGrabberComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAct
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+
+	//UE_LOG(LogTemp, Warning, TEXT("Location: %s"), *PlayerViewPointRotation.Vector().ToString());
+	//UE_LOG(LogTemp, Warning, TEXT("Rotation: %s"), *PlayerViewPointRotation.ToString());
+
 }
 
+FHitResult UGrabberComponent::GetFirstPhysicsBodyInReach() const
+{
+	//DrawDebugLine(GetWorld(), PlayerViewPointLocation, LineTraceEnd, FColor(0, 255, 0), false, 0.f, 0, 5.f);
+
+	FHitResult Hit;
+	FCollisionQueryParams TraceParams(FName(TEXT("")), false, GetOwner());
+
+	GetWorld()->LineTraceSingleByObjectType(OUT Hit, GetPlayerWorldPos(), GetPlayerReach(), FCollisionObjectQueryParams(ECollisionChannel::ECC_PhysicsBody), TraceParams);
+
+	AActor* HitComponent = Hit.GetActor();
+
+	if (HitComponent != NULL)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Hit with: %s"), *Hit.GetActor()->GetName());
+	}
+	else 
+	{
+		UE_LOG(LogTemp, Warning, TEXT("no"));
+	}
+
+	return Hit;
+}
+
+FVector UGrabberComponent::GetPlayerReach() const
+{
+	FVector PlayerViewPointLocation;
+	FRotator PlayerViewPointRotation;
+
+	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(OUT PlayerViewPointLocation, OUT PlayerViewPointRotation);
+
+	return PlayerViewPointLocation + (PlayerViewPointRotation.Vector() * Reach);
+
+}
+
+FVector UGrabberComponent::GetPlayerWorldPos() const
+{
+	FVector PlayerViewPointLocation;
+	FRotator PlayerViewPointRotation;
+
+	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(OUT PlayerViewPointLocation, OUT PlayerViewPointRotation);
+
+	return PlayerViewPointLocation;
+}
