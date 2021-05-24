@@ -44,6 +44,9 @@ void UGrabberComponent::Grab()
 	if (Hit.GetActor()) {
 		UE_LOG(LogTemp, Warning, TEXT("%s"), *Hit.GetActor()->GetName());
 
+		Hit.GetActor()->SetActorHiddenInGame(true);
+		Hit.GetActor()->SetActorEnableCollision(false);
+
 	}
 
 }
