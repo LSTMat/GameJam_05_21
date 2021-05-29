@@ -35,19 +35,25 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	//MAIN function for movement
+
+
 private:
+
+	//inventory command
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<class UUserWidget> InventoryScreenClass;
+	bool bIsInvetoryOpen;
+	float Delay = 0.f;
+	void OpenInventory();
+	UPROPERTY()
+		FTimerHandle RestartTimer;
 
 	//Sensibility for scrolling
 	UPROPERTY(EditAnywhere)
 		float VerticalRotationRate = 40;
 	UPROPERTY(EditAnywhere)
 		float HorizontalRotationRate = 40;
-	
-	//MAIN function for movement
-	void MoveForeward(float AxisValue);
-	void MoveRight(float AxisValue);
-	void LookUpRate(float AxisValue);
-	void LookRightRate(float AxisValue);
 
 	//Values for different types of speed
 	UPROPERTY(EditAnywhere)
@@ -58,16 +64,15 @@ private:
 		float NormalSpeed = 550.0f;
 	UPROPERTY(EditAnywhere)
 		float DecrasedSpeed = 300.0f;
-	
+
+	void MoveForeward(float AxisValue);
+	void MoveRight(float AxisValue);
+	void LookUpRate(float AxisValue);
+	void LookRightRate(float AxisValue);
+
 	//functions for modify speeds
 	void IncreaseMovementSpeed();
 	void NormalizeMovementSpeed();
 	void DecreaseMovementSpeed();
-
-	//Property of Character
-	UPROPERTY(EditDefaultsOnly)
-		float MaxHealth = 100;
-	UPROPERTY(VisibleAnywhere)
-		float Health;
 
 };

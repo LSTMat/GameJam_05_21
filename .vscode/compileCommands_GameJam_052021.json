@@ -55,6 +55,16 @@
 		"directory": "D:\\Epic\\UE_4.26\\Engine\\Source"
 	},
 	{
+		"file": "E:\\\\Unreal\\\\GameJame_05_21\\\\Source\\\\GameJam_052021\\\\GameJamGameModeBase.cpp",
+		"command": "cl.exe @\"E:\\Unreal\\GameJame_05_21\\.vscode\\compileCommands_GameJam_052021\\GameJam_052021.187.rsp\"",
+		"directory": "D:\\Epic\\UE_4.26\\Engine\\Source"
+	},
+	{
+		"file": "E:\\\\Unreal\\\\GameJame_05_21\\\\Source\\\\GameJam_052021\\\\GameJamGameModeBase.h",
+		"command": "cl.exe @\"E:\\Unreal\\GameJame_05_21\\.vscode\\compileCommands_GameJam_052021\\GameJam_052021.187.rsp\"",
+		"directory": "D:\\Epic\\UE_4.26\\Engine\\Source"
+	},
+	{
 		"file": "E:\\\\Unreal\\\\GameJame_05_21\\\\Source\\\\GameJam_052021\\\\MainCharacter.cpp",
 		"command": "cl.exe @\"E:\\Unreal\\GameJame_05_21\\.vscode\\compileCommands_GameJam_052021\\GameJam_052021.187.rsp\"",
 		"directory": "D:\\Epic\\UE_4.26\\Engine\\Source"

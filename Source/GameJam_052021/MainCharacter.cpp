@@ -4,6 +4,7 @@
 #include "MainCharacter.h"
 #include "Components/CapsuleComponent.h"
 #include "Camera/CameraComponent.h"
+#include "Blueprint/UserWidget.h"
 
 // Sets default values
 AMainCharacter::AMainCharacter()
@@ -23,6 +24,8 @@ void AMainCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	PlayerCharacterMovement = GetCharacterMovement();
+
+	bIsInvetoryOpen = 0;
 	
 }
 
@@ -49,6 +52,8 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	PlayerInputComponent->BindAxis(TEXT("LookUpRate"), this, &AMainCharacter::LookUpRate);
 
 	PlayerInputComponent->BindAction(TEXT("Jump"), IE_Pressed, this, &ACharacter::Jump);
+
+	PlayerInputComponent->BindAction(TEXT("Inventory"), IE_Pressed, this, &AMainCharacter::OpenInventory);
 
 	PlayerInputComponent->BindAction(TEXT("IncreaseSpeed"), IE_Pressed, this, &AMainCharacter::IncreaseMovementSpeed);
 	PlayerInputComponent->BindAction(TEXT("IncreaseSpeed"), IE_Released, this, &AMainCharacter::NormalizeMovementSpeed);
@@ -95,4 +100,27 @@ void AMainCharacter::LookUpRate(float AxisValue)
 void AMainCharacter::LookRightRate(float AxisValue)
 {
 	AddControllerYawInput(AxisValue * HorizontalRotationRate * GetWorld()->GetDeltaSeconds());
+}
+
+void AMainCharacter::OpenInventory() 
+{	
+	UUserWidget* InventoryScreen = CreateWidget(GetGameInstance(), InventoryScreenClass);
+	if (!bIsInvetoryOpen)
+	{
+		if (InventoryScreen)
+		{
+			InventoryScreen->AddToViewport();
+			bIsInvetoryOpen = 1;
+			UE_LOG(LogTemp, Warning, TEXT("OPEN"));
+		}
+	}
+	else
+	{
+		if (InventoryScreen)
+		{
+			InventoryScreen->SetVisibility(ESlateVisibility::Collapsed);
+			bIsInvetoryOpen = 0;
+			UE_LOG(LogTemp, Warning, TEXT("CLOSE"));
+		}
+	}
 }
