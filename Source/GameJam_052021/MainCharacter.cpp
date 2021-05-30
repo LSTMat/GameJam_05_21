@@ -5,6 +5,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Blueprint/UserWidget.h"
+#include "GameJam_052021/InteractionComponent.h"
 
 // Sets default values
 AMainCharacter::AMainCharacter()
@@ -25,7 +26,8 @@ void AMainCharacter::BeginPlay()
 
 	PlayerCharacterMovement = GetCharacterMovement();
 
-	bIsInvetoryOpen = 0;
+	InteractionCheckFrequency  = 0.f;
+	InteractionCheckDistance = 1000.f;
 	
 }
 
@@ -34,6 +36,74 @@ void AMainCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	PerformInteractionCheck();
+
+}
+
+void AMainCharacter::PerformInteractionCheck() 
+{
+
+	if(GetController() == nullptr){
+		return;
+	}
+
+	InteractionData.LastInteractionCheckTime = GetWorld()->GetTimeSeconds();
+
+	FVector EyesLoc;
+	FRotator EyesRot;
+
+	GetController()->GetPlayerViewPoint(EyesLoc, EyesRot);
+
+	FVector TraceStart = EyesLoc;
+	FVector TraceEnd = (EyesRot.Vector() * InteractionCheckDistance) + TraceStart;
+	FHitResult TraceHit;
+
+	FCollisionQueryParams QueryParams;
+	QueryParams.AddIgnoredActor(this);
+
+	if (GetWorld()->LineTraceSingleByChannel(TraceHit, TraceStart, TraceEnd, ECC_Visibility, QueryParams))
+	{
+		if(TraceHit.GetActor())
+		{
+			if(UInteractionComponent* InteractionComponent = Cast<UInteractionComponent>(TraceHit.GetActor()->GetComponentByClass(UInteractionComponent::StaticClass())))
+			{
+				float Distance = (TraceStart - TraceHit.ImpactPoint).Size();
+
+				if(InteractionComponent != GetInteractable() && Distance <= InteractionComponent->InteractionDistance)
+				{
+					FounddNewInteractable(InteractionComponent);
+				}
+				else if (Distance > InteractionComponent->InteractionDistance && GetInteractable())
+				{
+					CouldntFindInteractable();
+				}
+
+				return;
+
+			}
+		}
+	}
+
+	CouldntFindInteractable();
+
+}
+
+void AMainCharacter::CouldntFindInteractable() 
+{
+	if (InteractionData.ViewedInteractionComponent)
+	{
+		InteractionData.ViewedInteractionComponent->SetHiddenInGame(true);
+	}
+}
+
+void AMainCharacter::FounddNewInteractable(UInteractionComponent* Interactable) 
+{
+	//UE_LOG(LogTemp, Warning, TEXT("Found an interactable"))
+	if (Interactable)
+	{
+		Interactable->SetHiddenInGame(false);
+		InteractionData.ViewedInteractionComponent = Interactable;
+	}
 }
 
 // Called to bind functionality to input
@@ -52,8 +122,6 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	PlayerInputComponent->BindAxis(TEXT("LookUpRate"), this, &AMainCharacter::LookUpRate);
 
 	PlayerInputComponent->BindAction(TEXT("Jump"), IE_Pressed, this, &ACharacter::Jump);
-
-	PlayerInputComponent->BindAction(TEXT("Inventory"), IE_Pressed, this, &AMainCharacter::OpenInventory);
 
 	PlayerInputComponent->BindAction(TEXT("IncreaseSpeed"), IE_Pressed, this, &AMainCharacter::IncreaseMovementSpeed);
 	PlayerInputComponent->BindAction(TEXT("IncreaseSpeed"), IE_Released, this, &AMainCharacter::NormalizeMovementSpeed);
@@ -100,27 +168,4 @@ void AMainCharacter::LookUpRate(float AxisValue)
 void AMainCharacter::LookRightRate(float AxisValue)
 {
 	AddControllerYawInput(AxisValue * HorizontalRotationRate * GetWorld()->GetDeltaSeconds());
-}
-
-void AMainCharacter::OpenInventory() 
-{	
-	UUserWidget* InventoryScreen = CreateWidget(GetGameInstance(), InventoryScreenClass);
-	if (!bIsInvetoryOpen)
-	{
-		if (InventoryScreen)
-		{
-			InventoryScreen->AddToViewport();
-			bIsInvetoryOpen = 1;
-			UE_LOG(LogTemp, Warning, TEXT("OPEN"));
-		}
-	}
-	else
-	{
-		if (InventoryScreen)
-		{
-			InventoryScreen->SetVisibility(ESlateVisibility::Collapsed);
-			bIsInvetoryOpen = 0;
-			UE_LOG(LogTemp, Warning, TEXT("CLOSE"));
-		}
-	}
 }
