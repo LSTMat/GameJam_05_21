@@ -73,5 +73,25 @@
 		"file": "E:\\\\Unreal\\\\GameJame_05_21\\\\Source\\\\GameJam_052021\\\\MainCharacter.h",
 		"command": "cl.exe @\"E:\\Unreal\\GameJame_05_21\\.vscode\\compileCommands_GameJam_052021\\GameJam_052021.187.rsp\"",
 		"directory": "D:\\Epic\\UE_4.26\\Engine\\Source"
+	},
+	{
+		"file": "E:\\\\Unreal\\\\GameJame_05_21\\\\Source\\\\GameJam_052021\\\\MainGameInstance.cpp",
+		"command": "cl.exe @\"E:\\Unreal\\GameJame_05_21\\.vscode\\compileCommands_GameJam_052021\\GameJam_052021.187.rsp\"",
+		"directory": "D:\\Epic\\UE_4.26\\Engine\\Source"
+	},
+	{
+		"file": "E:\\\\Unreal\\\\GameJame_05_21\\\\Source\\\\GameJam_052021\\\\MainGameInstance.h",
+		"command": "cl.exe @\"E:\\Unreal\\GameJame_05_21\\.vscode\\compileCommands_GameJam_052021\\GameJam_052021.187.rsp\"",
+		"directory": "D:\\Epic\\UE_4.26\\Engine\\Source"
+	},
+	{
+		"file": "E:\\\\Unreal\\\\GameJame_05_21\\\\Source\\\\GameJam_052021\\\\MainPlayerController.cpp",
+		"command": "cl.exe @\"E:\\Unreal\\GameJame_05_21\\.vscode\\compileCommands_GameJam_052021\\GameJam_052021.187.rsp\"",
+		"directory": "D:\\Epic\\UE_4.26\\Engine\\Source"
+	},
+	{
+		"file": "E:\\\\Unreal\\\\GameJame_05_21\\\\Source\\\\GameJam_052021\\\\MainPlayerController.h",
+		"command": "cl.exe @\"E:\\Unreal\\GameJame_05_21\\.vscode\\compileCommands_GameJam_052021\\GameJam_052021.187.rsp\"",
+		"directory": "D:\\Epic\\UE_4.26\\Engine\\Source"
 	}
 ]

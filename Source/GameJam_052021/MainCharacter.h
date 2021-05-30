@@ -7,6 +7,33 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "MainCharacter.generated.h"
 
+USTRUCT()
+struct FInteractionData
+{
+
+	GENERATED_BODY()
+
+	FInteractionData()
+	{
+		ViewedInteractionComponent = nullptr;
+		LastInteractionCheckTime = 0.f;
+		bInteractHelf = false;
+	}
+
+	//Component for interaction
+	UPROPERTY()
+		class UInteractionComponent* ViewedInteractionComponent;
+
+	//last time we check for an interactable
+	UPROPERTY()
+		float LastInteractionCheckTime;
+
+	//if player is holding the action
+	UPROPERTY()
+		bool bInteractHelf;
+
+};
+
 class UCameraComponent;
 UCLASS()
 class GAMEJAM_052021_API AMainCharacter : public ACharacter
@@ -16,9 +43,6 @@ class GAMEJAM_052021_API AMainCharacter : public ACharacter
 public:
 	// Sets default values for this character's properties
 	AMainCharacter();
-
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -34,20 +58,37 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
 
-	//MAIN function for movement
+	//How often we have to check if there is a interactable object in our range
+	UPROPERTY(EditDefaultsOnly, Category = "Interaction")
+		float InteractionCheckFrequency;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Interaction")
+		float InteractionCheckDistance;
+
+	//check if there is an interactable object
+	void PerformInteractionCheck();
+
+	void CouldntFindInteractable();
+	void FounddNewInteractable(UInteractionComponent* Interactable);
+
+	//Start End Interaction checks
+	void BeginInteract();
+	void EndInteract();
+
+	void Interact();
+
+	//All the information for see the player interaction state
+	UPROPERTY()
+	FInteractionData InteractionData;
+
+	//Helper function to make grabbing interactable faster
+	FORCEINLINE class UInteractionComponent* GetInteractable() const {return InteractionData.ViewedInteractionComponent;}
 
 private:
-
-	//inventory command
-	UPROPERTY(EditAnywhere)
-		TSubclassOf<class UUserWidget> InventoryScreenClass;
-	bool bIsInvetoryOpen;
-	float Delay = 0.f;
-	void OpenInventory();
-	UPROPERTY()
-		FTimerHandle RestartTimer;
 
 	//Sensibility for scrolling
 	UPROPERTY(EditAnywhere)
