@@ -90,19 +90,75 @@ void AMainCharacter::PerformInteractionCheck()
 
 void AMainCharacter::CouldntFindInteractable() 
 {
-	if (InteractionData.ViewedInteractionComponent)
+	if (GetWorldTimerManager().IsTimerActive(TimerHandle_Interact))
 	{
-		InteractionData.ViewedInteractionComponent->SetHiddenInGame(true);
+		GetWorldTimerManager().ClearTimer(TimerHandle_Interact);
 	}
+
+	if(UInteractionComponent* Interactable = GetInteractable())
+	{
+		Interactable->EndFocus(this);
+
+		if (InteractionData.bInteractHelf)
+		{
+			EndInteract();
+		}
+	}
+
+	InteractionData.ViewedInteractionComponent = nullptr;
 }
 
 void AMainCharacter::FounddNewInteractable(UInteractionComponent* Interactable) 
 {
-	//UE_LOG(LogTemp, Warning, TEXT("Found an interactable"))
-	if (Interactable)
+	EndInteract();
+
+	if(UInteractionComponent* OldInteractable = GetInteractable())
 	{
-		Interactable->SetHiddenInGame(false);
-		InteractionData.ViewedInteractionComponent = Interactable;
+		OldInteractable->EndFocus(this);
+	}
+
+	InteractionData.ViewedInteractionComponent = Interactable;
+	Interactable->BeginFocus(this);
+}
+
+void AMainCharacter::BeginInteract() 
+{
+	InteractionData.bInteractHelf = true;
+
+	if (UInteractionComponent* Interactable = GetInteractable())
+	{
+		Interactable->BeginInteract(this);
+		
+		if (FMath::IsNearlyZero(Interactable->InteractionTime))
+		{
+			Interact();
+		}
+		else
+		{
+			GetWorldTimerManager().SetTimer(TimerHandle_Interact, this, &AMainCharacter::Interact, Interactable->InteractionTime, false);
+		}
+	}
+}
+
+void AMainCharacter::EndInteract() 
+{
+	InteractionData.bInteractHelf = false;
+
+	GetWorldTimerManager().ClearTimer(TimerHandle_Interact);
+
+	if (UInteractionComponent* Interactable = GetInteractable())
+	{
+		Interactable->EndInteract(this);
+	}
+}
+
+void AMainCharacter::Interact() 
+{
+	GetWorldTimerManager().ClearTimer(TimerHandle_Interact);
+
+	if(UInteractionComponent* Interactable = GetInteractable())
+	{
+		Interactable->Interact(this);
 	}
 }
 
@@ -122,6 +178,10 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	PlayerInputComponent->BindAxis(TEXT("LookUpRate"), this, &AMainCharacter::LookUpRate);
 
 	PlayerInputComponent->BindAction(TEXT("Jump"), IE_Pressed, this, &ACharacter::Jump);
+	PlayerInputComponent->BindAction(TEXT("Jump"), IE_Released, this, &ACharacter::StopJumping);
+
+	PlayerInputComponent->BindAction(TEXT("Interact"), IE_Pressed, this, &AMainCharacter::BeginInteract);
+	PlayerInputComponent->BindAction(TEXT("Interact"), IE_Released, this, &AMainCharacter::EndInteract);
 
 	PlayerInputComponent->BindAction(TEXT("IncreaseSpeed"), IE_Pressed, this, &AMainCharacter::IncreaseMovementSpeed);
 	PlayerInputComponent->BindAction(TEXT("IncreaseSpeed"), IE_Released, this, &AMainCharacter::NormalizeMovementSpeed);
@@ -129,10 +189,21 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	PlayerInputComponent->BindAction(TEXT("DecreaseSpeed"), IE_Released, this, &AMainCharacter::NormalizeMovementSpeed);
 }
 
+bool AMainCharacter::IsInteracting() const
+{
+	return GetWorldTimerManager().IsTimerActive(TimerHandle_Interact);
+}
+
+float AMainCharacter::GetRemainingInteractTime() const
+{
+	return GetWorldTimerManager().GetTimerRemaining(TimerHandle_Interact);
+}
+
 void AMainCharacter::MoveForeward(float AxisValue)
 {
 	if (AxisValue != 0.0f){
 		AddMovementInput(GetActorForwardVector() * AxisValue);
+		NormalizeMovementSpeed();
 		//UE_LOG(LogTemp, Warning, TEXT("FWD %f"), AxisValue);
 	}
 }
@@ -141,6 +212,7 @@ void AMainCharacter::MoveRight(float AxisValue)
 {
 	if (AxisValue != 0.0f){
 		AddMovementInput(GetActorRightVector() * AxisValue);
+		NormalizeMovementSpeed();
 		//UE_LOG(LogTemp, Warning, TEXT("RIGHT %f"), AxisValue);
 	}
 }

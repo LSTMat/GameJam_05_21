@@ -55,6 +55,12 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		UCameraComponent* CameraComponent;
 
+	//if we are interacting with an item that has an interaction time
+	bool IsInteracting() const;
+
+	//get the time until we interact with the current interactable
+	float GetRemainingInteractTime() const;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -87,6 +93,8 @@ protected:
 
 	//Helper function to make grabbing interactable faster
 	FORCEINLINE class UInteractionComponent* GetInteractable() const {return InteractionData.ViewedInteractionComponent;}
+
+	FTimerHandle TimerHandle_Interact;
 
 private:
 
