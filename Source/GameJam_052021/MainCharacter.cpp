@@ -203,7 +203,6 @@ void AMainCharacter::MoveForeward(float AxisValue)
 {
 	if (AxisValue != 0.0f){
 		AddMovementInput(GetActorForwardVector() * AxisValue);
-		NormalizeMovementSpeed();
 		//UE_LOG(LogTemp, Warning, TEXT("FWD %f"), AxisValue);
 	}
 }
@@ -212,23 +211,25 @@ void AMainCharacter::MoveRight(float AxisValue)
 {
 	if (AxisValue != 0.0f){
 		AddMovementInput(GetActorRightVector() * AxisValue);
-		NormalizeMovementSpeed();
 		//UE_LOG(LogTemp, Warning, TEXT("RIGHT %f"), AxisValue);
 	}
 }
 
 void AMainCharacter::IncreaseMovementSpeed() 
 {
+	UE_LOG(LogTemp, Warning, TEXT("increase"));
 	PlayerCharacterMovement->MaxWalkSpeed = IncreasedSpeed * SpeedRate;
 }
 
 void AMainCharacter::NormalizeMovementSpeed() 
 {
+	UE_LOG(LogTemp, Warning, TEXT("normal"));
 	PlayerCharacterMovement->MaxWalkSpeed = NormalSpeed * SpeedRate;
 }
 
 void AMainCharacter::DecreaseMovementSpeed()
 {
+	UE_LOG(LogTemp, Warning, TEXT("decrease"));
 	PlayerCharacterMovement->MaxWalkSpeed = DecrasedSpeed * SpeedRate;
 }
 
