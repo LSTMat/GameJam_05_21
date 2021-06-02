@@ -19,12 +19,7 @@ void UInventoryComponent::BeginPlay()
 	
 }
 
-
-// Called every frame
-void UInventoryComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UInventoryComponent::AddItem(class UItem* Item) 
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
+	Items.Add(Item);
 }
-

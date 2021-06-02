@@ -217,19 +217,19 @@ void AMainCharacter::MoveRight(float AxisValue)
 
 void AMainCharacter::IncreaseMovementSpeed() 
 {
-	UE_LOG(LogTemp, Warning, TEXT("increase"));
+	//UE_LOG(LogTemp, Warning, TEXT("increase"));
 	PlayerCharacterMovement->MaxWalkSpeed = IncreasedSpeed * SpeedRate;
 }
 
 void AMainCharacter::NormalizeMovementSpeed() 
 {
-	UE_LOG(LogTemp, Warning, TEXT("normal"));
+	//UE_LOG(LogTemp, Warning, TEXT("normal"));
 	PlayerCharacterMovement->MaxWalkSpeed = NormalSpeed * SpeedRate;
 }
 
 void AMainCharacter::DecreaseMovementSpeed()
 {
-	UE_LOG(LogTemp, Warning, TEXT("decrease"));
+	//UE_LOG(LogTemp, Warning, TEXT("decrease"));
 	PlayerCharacterMovement->MaxWalkSpeed = DecrasedSpeed * SpeedRate;
 }
 

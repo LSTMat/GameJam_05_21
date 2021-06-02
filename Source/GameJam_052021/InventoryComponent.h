@@ -12,12 +12,17 @@ class GAMEJAM_052021_API UInventoryComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
+	friend class UItem;
+
 public:	
 	// Sets default values for this component's properties
 	UInventoryComponent();
 
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	UFUNCTION(BlueprintPure, Category = "Inventory")
+		FORCEINLINE TArray<class UItem*> GetItems() const { return Items; }
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+		void AddItem(class UItem* Item);
 
 protected:
 	// Called when the game starts
@@ -25,11 +30,5 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, Category = "Inventory")
 		TArray<class UItem*> Items;
-
-private:
-
-	//UFUNCTION()
-	//	void OnRep_Items();
-
 		
 };

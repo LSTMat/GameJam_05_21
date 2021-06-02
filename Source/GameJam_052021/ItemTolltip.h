@@ -14,4 +14,9 @@ class GAMEJAM_052021_API UItemTolltip : public UUserWidget
 {
 	GENERATED_BODY()
 	
+public:
+
+	UPROPERTY(BlueprintReadOnly, Category = "Tooltip", meta = (ExposeOnSpawn = true))
+		class UInventoryItemWidget* InventoryItemWidget;
+
 };
