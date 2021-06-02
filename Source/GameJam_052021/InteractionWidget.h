@@ -9,7 +9,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS( ClassGroup=(Custom))
 class GAMEJAM_052021_API UInteractionWidget : public UUserWidget
 {
 	GENERATED_BODY()
