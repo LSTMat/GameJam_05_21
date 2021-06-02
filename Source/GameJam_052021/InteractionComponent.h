@@ -76,6 +76,7 @@ public :
 
 	void RefreshWidget();
 
+	UPROPERTY()
 	class AMainCharacter* Interactor = nullptr;
 
 protected:
