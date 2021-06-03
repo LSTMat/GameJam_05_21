@@ -108,11 +108,11 @@ private:
 	UPROPERTY(EditAnywhere)
 		float SpeedRate = 1;
 	UPROPERTY(EditAnywhere)
-		float IncreasedSpeed = 800.0f;
+		float IncreasedSpeed = 540.0f;
 	UPROPERTY(EditAnywhere)
-		float NormalSpeed = 550.0f;
+		float NormalSpeed = 360.0f;
 	UPROPERTY(EditAnywhere)
-		float DecrasedSpeed = 300.0f;
+		float DecrasedSpeed = 180.0f;
 
 	void MoveForeward(float AxisValue);
 	void MoveRight(float AxisValue);

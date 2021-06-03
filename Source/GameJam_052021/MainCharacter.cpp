@@ -28,6 +28,7 @@ void AMainCharacter::BeginPlay()
 
 	InteractionCheckFrequency  = 0.f;
 	InteractionCheckDistance = 1000.f;
+	PlayerCharacterMovement->MaxWalkSpeed = NormalSpeed * SpeedRate;
 	
 }
 
